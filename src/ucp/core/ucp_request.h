@@ -178,7 +178,11 @@ struct ucp_request {
                     ucp_tag_t         ssend_tag; /* Tag in offload sync send */
                     void              *rndv_op;  /* Handler of issued rndv send. Need to cancel
                                                     the operation if it is completed by SW. */
-                 } tag_offload;
+                } tag_offload;
+
+                struct {
+                    uint8_t am_id;
+                } am;
             };
 
             /* This structure holds all mutable fields, and everything else

@@ -97,6 +97,7 @@ gtest_SOURCES = \
 	uct/test_peer_failure.cc \
 	uct/test_tag.cc \
 	\
+	ucp/test_ucp_am.cc \
 	ucp/test_ucp_stream.cc \
 	ucp/test_ucp_peer_failure.cc \
 	ucp/test_ucp_atomic.cc \

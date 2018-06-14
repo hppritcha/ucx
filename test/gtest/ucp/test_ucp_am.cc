@@ -23,10 +23,8 @@ public:
     static ucs_status_t ucp_process_am_cb(void *arg, void *data, 
                                           size_t length, unsigned flags);
 
-    ucs_status_t am_handler(test_ucp_am_base *me, void *data, size_t  length, unsigned flags);
-protected:
-    ucs_status_ptr_t am_put_nb(const int am_id, const ucp::data_type_desc_t& dt_desc);
-    
+    ucs_status_t am_handler(test_ucp_am_base *me, void *data, 
+                            size_t  length, unsigned flags);
 };
 
 void test_ucp_am_base::ucp_put_am_cb(void *request, ucs_status_t status){
@@ -39,7 +37,8 @@ ucs_status_t test_ucp_am_base::ucp_process_am_cb(void *arg, void *data,
     return self->am_handler(self, data, length, flags);
 }
 
-ucs_status_t test_ucp_am_base::am_handler(test_ucp_am_base *me, void *data, size_t length, unsigned flags){
+ucs_status_t test_ucp_am_base::am_handler(test_ucp_am_base *me, void *data, 
+                                          size_t length, unsigned flags){
     std::vector<char> cmp(length, (char)length);
     std::vector<char> databuf(length, 'r');
     memcpy(&databuf[0], data, length);
@@ -81,7 +80,9 @@ void test_ucp_am::do_put_process_data_test()
         for(size_t j = 0; j < i; j++){
             buf[j] = (char)i;
         }
-        sstatus = ucp_ep_am_put(receiver().ep(), 0, buf, 1, ucp_dt_make_contig(i), test_ucp_am_base::ucp_put_am_cb, 0);
+        sstatus = ucp_ep_am_put(receiver().ep(), 0, 
+                                buf, 1, ucp_dt_make_contig(i), 
+                                test_ucp_am_base::ucp_put_am_cb, 0);
         
         EXPECT_FALSE(UCS_PTR_IS_ERR(sstatus));
         

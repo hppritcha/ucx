@@ -54,6 +54,7 @@ libucp_la_SOURCES = \
 	amo/basic_amo.c \
 	amo/nb_amo.c \
 	core/ucp_context.c \
+	core/ucp_am.c \
 	core/ucp_ep.c \
 	core/ucp_listener.c \
 	core/ucp_mm.c \

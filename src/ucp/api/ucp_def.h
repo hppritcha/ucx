@@ -82,6 +82,32 @@ typedef struct ucp_ep                    *ucp_ep_h;
 
 
 /**
+ * @ingroup UCP_ENDPOINT
+ * @brief Callback to process incomeing active message
+ *
+ * When the callback is called, @a flags indicates how @a should be handled.
+ *  
+ * @param [in]  arg     User-defined argument.
+ * @param [in]  data    Points to the received data. This may be part of
+ *                      a descriptor which may be released later.
+ * @param [in]  length  Length of data.
+ * @param [in]  flags   Mask with #ref uct_cb_param_flags
+ *
+ * @note This callback could be set and released
+ *       by @ref ucp_ep_set_am_handler function.
+ *       The minimum value of length is 8. If a user only
+ *       specifies to send 1 byte, that will be the only
+ *       valid byte in data, however length will still be set to 8.
+ *
+ * @retval UCS_OK         - The user must always specify the function to
+ *                          return UCS_OK. Failure to do this can result
+ *                          memory leaks or errors
+ */
+typedef ucs_status_t (*ucp_am_callback_t)(void *arg, void *data, size_t length,
+                                          unsigned flags);
+
+
+/**
  * @ingroup UCP_WORKER
  * @brief UCP worker address
  *

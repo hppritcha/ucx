@@ -98,8 +98,8 @@ typedef struct am_recv_args{
 } am_recv_args_t;
 
 static ucs_status_t client_status = UCS_OK;
-static uint16_t server_port = 13337;
-static const ucp_tag_t tag  = 0x1337a880u;
+static uint16_t server_port = 13337;  /* non-privileged port */
+static const ucp_tag_t tag  = 0x1337a880u; /* tag that exercises all bits */
 static const ucp_tag_t tag_mask = -1;
 static ucp_address_t *local_addr;
 static ucp_address_t *peer_addr;
@@ -320,7 +320,6 @@ static int run_ucx_server(ucp_worker_h ucp_worker)
 
     free(msg);
 
-    /* Send test string to client */
     ep_params.field_mask      = UCP_EP_PARAM_FIELD_REMOTE_ADDRESS |
                                 UCP_EP_PARAM_FIELD_ERR_HANDLING_MODE |
                                 UCP_EP_PARAM_FIELD_ERR_HANDLER |
@@ -333,7 +332,8 @@ static int run_ucx_server(ucp_worker_h ucp_worker)
 
     status = ucp_ep_create(ucp_worker, &ep_params, &client_ep);
     CHKERR_JUMP(status != UCS_OK, "ucp_ep_create\n", err);
-  
+    
+    /* telling client_ep to do matrix multiplication */
     for(i = 0; i < NUM_MATRICES; i++){
         put_args.array_index = i;
         put_args.scalar = i + 1;

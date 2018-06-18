@@ -95,6 +95,9 @@ typedef struct ucp_ep                    *ucp_ep_h;
  *
  * @note This callback could be set and released
  *       by @ref ucp_ep_set_am_handler function.
+ *       The minimum value of length is 8. If a user only
+ *       specifies to send 1 byte, that will be the only
+ *       valid byte in data, however length will still be set to 8.
  *
  * @retval UCS_OK         - The user must always specify the function to
  *                          return UCS_OK. Failure to do this can result

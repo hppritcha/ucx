@@ -1,5 +1,6 @@
 /**
 * Copyright (C) Mellanox Technologies Ltd. 2001-2015.  ALL RIGHTS RESERVED.
+* Copyright (C) Los Alamos National Security, LLC. 2018 ALL RIGHTS RESERVED.
 *
 * See file LICENSE for terms.
 */
@@ -23,6 +24,7 @@
 
 
 extern const ucp_proto_t ucp_stream_am_proto;
+extern const ucp_proto_t ucp_am_proto;
 
 #if ENABLE_STATS
 static ucs_stats_class_t ucp_ep_stats_class = {
@@ -986,6 +988,7 @@ void ucp_ep_config_init(ucp_worker_h worker, ucp_ep_config_t *config)
     config->tag.rndv.rkey_size          = ucp_rkey_packed_size(context,
                                                                config->key.rma_bw_md_map);
     config->stream.proto                = &ucp_stream_am_proto;
+    config->am_u.proto                  = &ucp_am_proto;
     config->tag.offload.max_eager_short = -1;
     max_rndv_thresh                     = SIZE_MAX;
     max_am_rndv_thresh                  = SIZE_MAX;
